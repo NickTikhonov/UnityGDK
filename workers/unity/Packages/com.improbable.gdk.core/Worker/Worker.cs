@@ -136,8 +136,13 @@ namespace Improbable.Gdk.Core
 
         public void Dispose()
         {
-            World?.Dispose();
-            World = null;
+            // A check is needed for the case that play mode is exited before the connection can complete.
+            if (Application.isPlaying)
+            {
+                World?.Dispose();
+                World = null;
+            }
+
             LogDispatcher?.Dispose();
             LogDispatcher = null;
             Connection?.Dispose();
